@@ -10,7 +10,6 @@ import (
 	_ "github.com/lib/pq"
 )
 
-// Struct for request body
 type User struct {
 	UserID   string `json:"user_id"`
 	Password string `json:"password"`
@@ -19,8 +18,8 @@ type User struct {
 var db *sql.DB
 
 func main() {
-	// Connect to PostgreSQL
-	connStr := "host=localhost port=5432 user=postgres password=arya dbname=testinsta sslmode=disable"
+	
+	connStr := "host=localhost port=5432 user=postgres password=*** dbname=testinsta sslmode=disable"
 	var err error
 	db, err = sql.Open("postgres", connStr)
 	if err != nil {
@@ -30,13 +29,11 @@ func main() {
 	if err != nil {
 		log.Fatal("Database not reachable:", err)
 	}
-	fmt.Println("Connected to PostgreSQL ✅")
+	fmt.Println("Connected to PostgreSQL")
 
-	// Serve static frontend
 	fs := http.FileServer(http.Dir("./fr"))
 	http.Handle("/", fs)
 
-	// API endpoint
 	http.HandleFunc("/api/register", registerHandler)
 	http.HandleFunc("/api/login", loginHandler)
 
@@ -78,7 +75,6 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 
-// registerHandler handles form submissions
 func registerHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Only POST allowed", http.StatusMethodNotAllowed)
@@ -92,7 +88,6 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Insert into PostgreSQL
 	_, err = db.Exec("INSERT INTO users (user_id, password) VALUES ($1, $2)", u.UserID, u.Password)
 	if err != nil {
 		http.Error(w, "DB insert error: "+err.Error(), http.StatusInternalServerError)
